@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:colorBackground">@android:color/white</item>
+
+        <item name="timePickerStyle">@style/Widget.Material.Light.TimePicker</item>
+        <item name="datePickerStyle">@style/Widget.Material.Light.DatePicker</item>
+    </style>
+
+</resources>
