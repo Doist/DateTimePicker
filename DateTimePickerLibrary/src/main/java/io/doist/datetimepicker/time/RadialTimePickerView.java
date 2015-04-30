@@ -37,7 +37,6 @@ import android.support.v4.widget.ExploreByTouchHelper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.HapticFeedbackConstants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1272,7 +1271,6 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
 
             // Only provide feedback if the value actually changed.
             if (valueChanged || forceSelection) {
-                performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK);
                 invalidate();
             }
             return true;

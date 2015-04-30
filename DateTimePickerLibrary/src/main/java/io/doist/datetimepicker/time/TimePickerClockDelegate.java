@@ -649,6 +649,11 @@ class TimePickerClockDelegate extends TimePicker.AbstractTimePickerDelegate impl
         if (mOnTimeChangedListener != null) {
             mOnTimeChangedListener.onTimeChanged(mDelegator, getCurrentHour(), getCurrentMinute());
         }
+
+        if (!autoAdvance) {
+            // Only provide haptic feedback if the value actually changed.
+            tryVibrate();
+        }
     }
 
     private void updateHeaderHour(int value, boolean announce) {
