@@ -16,118 +16,44 @@
 
 package io.doist.datetimepicker.date;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-
-import io.doist.datetimepicker.R;
 
 /**
  * Dialog allowing users to select a date.
  */
-public class DatePickerDialogFragment extends DialogFragment implements DatePicker.OnDateChangedListener {
+public class DatePickerDialogFragment extends DialogFragment {
     public static final String TAG = DatePickerDialogFragment.class.getName();
 
-    private static final String KEY_YEAR = "year";
-    private static final String KEY_MONTH_OF_YEAR = "month";
-    private static final String KEY_DAY_OF_MONTH = "day";
+    private DatePickerDialogFragmentDelegate mDelegate;
 
-    private DatePicker mDatePicker;
+    public DatePickerDialogFragment() {
+        mDelegate = onCreateDatePickerDialogFragmentDelegate();
+    }
 
-    private OnDateSetListener mOnDateSetListener;
-
-    public DatePickerDialogFragment() { }
+    protected DatePickerDialogFragmentDelegate onCreateDatePickerDialogFragmentDelegate() {
+        return new DatePickerDialogFragmentDelegate();
+    }
 
     public static DatePickerDialogFragment newInstance(OnDateSetListener listener, int year, int monthOfYear,
                                                        int dayOfMonth) {
         DatePickerDialogFragment fragment = new DatePickerDialogFragment();
-        Bundle arguments = new Bundle();
-        arguments.putInt(KEY_YEAR, year);
-        arguments.putInt(KEY_MONTH_OF_YEAR, monthOfYear);
-        arguments.putInt(KEY_DAY_OF_MONTH, dayOfMonth);
-        fragment.setArguments(arguments);
+        fragment.setArguments(DatePickerDialogFragmentDelegate.createArguments(year, monthOfYear, dayOfMonth));
         fragment.setOnDateSetListener(listener);
         return fragment;
-    }
-
-    public void setOnDateSetListener(OnDateSetListener listener) {
-        mOnDateSetListener = listener;
-    }
-
-    static int resolveDialogTheme(Context context, int resid) {
-        if (resid == 0) {
-            final TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.datePickerDialogTheme, outValue, true);
-            return outValue.resourceId;
-        } else {
-            return resid;
-        }
     }
 
     @SuppressWarnings("InflateParams")
     @NonNull
     @Override
-    public final Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.date_picker_dialog, null);
-        mDatePicker = (DatePicker) view.findViewById(R.id.datePicker);
-        if (savedInstanceState == null) {
-            Bundle arguments = getArguments();
-            int year = arguments.getInt(KEY_YEAR);
-            int monthOfYear = arguments.getInt(KEY_MONTH_OF_YEAR);
-            int dayOfMonth = arguments.getInt(KEY_DAY_OF_MONTH);
-            mDatePicker.init(year, monthOfYear, dayOfMonth, this);
-        } else {
-            mDatePicker.setOnDateChangedListener(this);
-        }
-
-        final AlertDialog dialog = onCreateDialogBuilder(view).create();
-
-        mDatePicker.setValidationCallback(new DatePicker.ValidationCallback() {
-            @Override
-            public void onValidationChanged(boolean valid) {
-                final Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                if (positive != null) {
-                    positive.setEnabled(valid);
-                }
-            }
-        });
-
-        return dialog;
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return mDelegate.onCreateDialog(getActivity(), savedInstanceState, getArguments());
     }
 
-    /**
-     * Allows sub-classes to customize AlertDialog.
-     */
-    protected AlertDialog.Builder onCreateDialogBuilder(View view) {
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(getActivity(), resolveDialogTheme(getActivity(), getTheme()));
-        builder.setView(view);
-        builder.setPositiveButton(R.string.done_label, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mOnDateSetListener.onDateSet(
-                        mDatePicker,
-                        mDatePicker.getYear(),
-                        mDatePicker.getMonth(),
-                        mDatePicker.getDayOfMonth());
-            }
-        });
-        // Make sure the dialog width works as WRAP_CONTENT.
-        builder.getContext().getTheme().applyStyle(R.style.Theme_Window_NoMinWidth, true);
-        return builder;
-    }
-
-    @Override
-    public void onDateChanged(DatePicker view, int year, int month, int day) {
-        mDatePicker.init(year, month, day, this);
+    public void setOnDateSetListener(OnDateSetListener listener) {
+        mDelegate.setOnDateSetListener(listener);
     }
 
     /**
@@ -136,17 +62,17 @@ public class DatePickerDialogFragment extends DialogFragment implements DatePick
      * @return The calendar view.
      */
     public DatePicker getDatePicker() {
-        return mDatePicker;
+        return mDelegate.getDatePicker();
     }
 
     /**
      * Sets the current date.
      *
-     * @param year The date year.
+     * @param year        The date year.
      * @param monthOfYear The date month.
-     * @param dayOfMonth The date day of month.
+     * @param dayOfMonth  The date day of month.
      */
     public void updateDate(int year, int monthOfYear, int dayOfMonth) {
-        mDatePicker.updateDate(year, monthOfYear, dayOfMonth);
+        mDelegate.updateDate(year, monthOfYear, dayOfMonth);
     }
 }

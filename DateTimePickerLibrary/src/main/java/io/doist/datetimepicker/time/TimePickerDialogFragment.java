@@ -16,19 +16,10 @@
 
 package io.doist.datetimepicker.time;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-
-import io.doist.datetimepicker.R;
 
 
 /**
@@ -37,114 +28,54 @@ import io.doist.datetimepicker.R;
  * <p>See the <a href="{@docRoot}guide/topics/ui/controls/pickers.html">Pickers</a>
  * guide.</p>
  */
-public class TimePickerDialogFragment extends DialogFragment implements TimePicker.OnTimeChangedListener {
+public class TimePickerDialogFragment extends DialogFragment {
     public static final String TAG = TimePickerDialogFragment.class.getName();
 
-    private static final String KEY_HOUR_OF_DAY = "hour";
-    private static final String KEY_MINUTE = "minute";
-    private static final String KEY_IS_24_HOUR = "is24Hour";
+    private TimePickerDialogFragmentDelegate mDelegate;
 
-    private TimePicker mTimePicker;
-    private OnTimeSetListener mOnTimeSetListener;
+    public TimePickerDialogFragment() {
+        mDelegate = onCreateTimePickerDialogFragmentDelegate();
+    }
 
-    public TimePickerDialogFragment() { }
+    protected TimePickerDialogFragmentDelegate onCreateTimePickerDialogFragmentDelegate() {
+        return new TimePickerDialogFragmentDelegate();
+    }
 
     public static TimePickerDialogFragment newInstance(OnTimeSetListener listener, int hourOfDay, int minute,
-                                                             boolean is24Hour) {
+                                                       boolean is24Hour) {
         TimePickerDialogFragment fragment = new TimePickerDialogFragment();
-        Bundle arguments = new Bundle();
-        arguments.putInt(KEY_HOUR_OF_DAY, hourOfDay);
-        arguments.putInt(KEY_MINUTE, minute);
-        arguments.putBoolean(KEY_IS_24_HOUR, is24Hour);
-        fragment.setArguments(arguments);
+        fragment.setArguments(TimePickerDialogFragmentDelegate.createArguments(hourOfDay, minute, is24Hour));
         fragment.setOnTimeSetListener(listener);
         return fragment;
-    }
-
-    public void setOnTimeSetListener(OnTimeSetListener listener) {
-        mOnTimeSetListener = listener;
-    }
-
-    static int resolveDialogTheme(Context context, int resid) {
-        if (resid == 0) {
-            final TypedValue outValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.timePickerDialogTheme, outValue, true);
-            return outValue.resourceId;
-        } else {
-            return resid;
-        }
     }
 
     @SuppressWarnings("InflateParams")
     @NonNull
     @Override
-    public final Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.time_picker_dialog, null);
-        mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
-        if (savedInstanceState == null) {
-            Bundle arguments = getArguments();
-            int hourOfDay = arguments.getInt(KEY_HOUR_OF_DAY);
-            int minute = arguments.getInt(KEY_MINUTE);
-            boolean is24Hour = arguments.getBoolean(KEY_IS_24_HOUR);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        return mDelegate.onCreateDialog(getActivity(), savedInstanceState, getArguments());
+    }
 
-            mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
-            mTimePicker.setCurrentHour(hourOfDay);
-            mTimePicker.setCurrentMinute(minute);
-            mTimePicker.setIs24Hour(is24Hour);
-        }
-        mTimePicker.setOnTimeChangedListener(this);
-
-        final AlertDialog dialog = onCreateDialogBuilder(view).create();
-
-        mTimePicker.setValidationCallback(new TimePicker.ValidationCallback() {
-            @Override
-            public void onValidationChanged(boolean valid) {
-                final Button positive = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                if (positive != null) {
-                    positive.setEnabled(valid);
-                }
-            }
-        });
-
-        return dialog;
+    public void setOnTimeSetListener(OnTimeSetListener listener) {
+        mDelegate.setOnTimeSetListener(listener);
     }
 
     /**
-     * Allows sub-classes to customize AlertDialog.
+     * Gets the {@link TimePicker} contained in this dialog.
+     *
+     * @return The calendar view.
      */
-    protected AlertDialog.Builder onCreateDialogBuilder(View view) {
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(getActivity(), resolveDialogTheme(getActivity(), getTheme()));
-        builder.setView(view);
-        builder.setPositiveButton(R.string.done_label, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (mOnTimeSetListener != null) {
-                    mOnTimeSetListener.onTimeSet(
-                            mTimePicker,
-                            mTimePicker.getCurrentHour(),
-                            mTimePicker.getCurrentMinute());
-                }
-            }
-        });
-        // Make sure the dialog width works as WRAP_CONTENT.
-        builder.getContext().getTheme().applyStyle(R.style.Theme_Window_NoMinWidth, true);
-        return builder;
-    }
-
-    @Override
-    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-        // Do nothing.
+    public TimePicker getTimePicker() {
+        return mDelegate.getTimePicker();
     }
 
     /**
      * Sets the current time.
      *
-     * @param hourOfDay The current hour within the day.
+     * @param hourOfDay    The current hour within the day.
      * @param minuteOfHour The current minute within the hour.
      */
     public void updateTime(int hourOfDay, int minuteOfHour) {
-        mTimePicker.setCurrentHour(hourOfDay);
-        mTimePicker.setCurrentMinute(minuteOfHour);
+        mDelegate.updateTime(hourOfDay, minuteOfHour);
     }
 }
