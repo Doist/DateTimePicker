@@ -14,22 +14,25 @@
  * limitations under the License.
  */
 
-package io.doist.datetimepicker.date;
+package io.doist.datetimepicker.fragment;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
+
+import io.doist.datetimepicker.date.DatePicker;
+import io.doist.datetimepicker.date.OnDateSetListener;
 
 /**
  * Dialog allowing users to select a date.
  */
-public class DatePickerDialogFragmentCompat extends DialogFragment {
-    public static final String TAG = DatePickerDialogFragmentCompat.class.getName();
+public class DatePickerDialogFragment extends DialogFragment {
+    public static final String TAG = DatePickerDialogFragment.class.getName();
 
     private DatePickerDialogFragmentDelegate mDelegate;
 
-    public DatePickerDialogFragmentCompat() {
+    public DatePickerDialogFragment() {
         mDelegate = onCreateDatePickerDialogFragmentDelegate();
     }
 
@@ -37,9 +40,9 @@ public class DatePickerDialogFragmentCompat extends DialogFragment {
         return new DatePickerDialogFragmentDelegate();
     }
 
-    public static DatePickerDialogFragmentCompat newInstance(OnDateSetListener listener, int year, int monthOfYear,
-                                                             int dayOfMonth) {
-        DatePickerDialogFragmentCompat fragment = new DatePickerDialogFragmentCompat();
+    public static DatePickerDialogFragment newInstance(OnDateSetListener listener, int year, int monthOfYear,
+                                                       int dayOfMonth) {
+        DatePickerDialogFragment fragment = new DatePickerDialogFragment();
         fragment.setArguments(DatePickerDialogFragmentDelegate.createArguments(year, monthOfYear, dayOfMonth));
         fragment.setOnDateSetListener(listener);
         return fragment;

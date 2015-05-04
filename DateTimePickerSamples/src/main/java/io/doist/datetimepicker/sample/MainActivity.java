@@ -11,11 +11,11 @@ import android.widget.Toast;
 import java.util.Calendar;
 
 import io.doist.datetimepicker.date.DatePicker;
-import io.doist.datetimepicker.date.DatePickerDialogFragmentCompat;
+import io.doist.datetimepicker.fragment.DatePickerDialogFragmentCompat;
 import io.doist.datetimepicker.date.OnDateSetListener;
 import io.doist.datetimepicker.time.OnTimeSetListener;
 import io.doist.datetimepicker.time.TimePicker;
-import io.doist.datetimepicker.time.TimePickerDialogFragmentCompat;
+import io.doist.datetimepicker.fragment.TimePickerDialogFragmentCompat;
 
 
 public class MainActivity extends AppCompatActivity implements OnDateSetListener, OnTimeSetListener {

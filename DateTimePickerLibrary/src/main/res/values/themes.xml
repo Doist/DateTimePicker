@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.AppCompat.Light.Dialog.Alert.DatePicker" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowMinWidthMinor">0dip</item>
-        <item name="android:windowMinWidthMajor">0dip</item>
-        <item name="windowMinWidthMinor">0dip</item>
-        <item name="windowMinWidthMajor">0dip</item>
-    </style>
-
-    <style name="Theme.AppCompat.Light.Dialog.Alert.TimePicker" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="Theme.Window.NoMinWidth" parent="">
         <item name="android:windowMinWidthMinor">0dip</item>
         <item name="android:windowMinWidthMajor">0dip</item>
         <item name="windowMinWidthMinor">0dip</item>

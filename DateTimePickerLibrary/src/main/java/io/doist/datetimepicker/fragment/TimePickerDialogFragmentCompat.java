@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 
-package io.doist.datetimepicker.time;
+package io.doist.datetimepicker.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+
+import io.doist.datetimepicker.time.OnTimeSetListener;
+import io.doist.datetimepicker.time.TimePicker;
 
 
 /**
