@@ -53,7 +53,7 @@ public class DateTimeUtilsCompat {
             amPmStrings = internalgetBestAmPmStrings(locale);
             if (amPmStrings == null) {
                 // Fallback to Locale.US if no strings are found for every other locale.
-                amPmStrings = internalgetBestAmPmStrings(locale);
+                amPmStrings = internalgetBestAmPmStrings(Locale.US);
             }
         }
         return amPmStrings;
