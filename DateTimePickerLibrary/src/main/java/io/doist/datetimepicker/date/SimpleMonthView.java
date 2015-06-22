@@ -26,6 +26,7 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
@@ -40,6 +41,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Formatter;
@@ -77,6 +79,8 @@ class SimpleMonthView extends View {
 
     /** Single-letter (when available) formatter for the day of week label. */
     private SimpleDateFormat mDayFormatter = new SimpleDateFormat("EEEEE", Locale.getDefault());
+    // For compat single-letter day of week label.
+    private DateFormatSymbols mDateFormatSymbols = new DateFormatSymbols();
 
     // affects the padding on the sides of this view
     private int mPadding = 0;
@@ -443,10 +447,25 @@ class SimpleMonthView extends View {
             final int calendarDay = (i + mWeekStart) % mNumDays;
             mDayLabelCalendar.set(Calendar.DAY_OF_WEEK, calendarDay);
 
-            final String dayLabel = mDayFormatter.format(mDayLabelCalendar.getTime());
+            final String dayLabel;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                dayLabel = getDayLabel(mDayLabelCalendar);
+            } else {
+                dayLabel = getDayLabelCompat(mDayLabelCalendar);
+            }
             final int x = (2 * i + 1) * dayWidthHalf + mPadding;
             canvas.drawText(dayLabel, x, y, mMonthDayLabelPaint);
         }
+    }
+
+    private String getDayLabel(Calendar calendar) {
+        return mDayFormatter.format(calendar.getTime());
+    }
+
+    private String getDayLabelCompat(Calendar calendar) {
+        return mDateFormatSymbols
+                .getShortWeekdays()[calendar.get(Calendar.DAY_OF_WEEK)]
+                .toUpperCase(Locale.getDefault());
     }
 
     /**
