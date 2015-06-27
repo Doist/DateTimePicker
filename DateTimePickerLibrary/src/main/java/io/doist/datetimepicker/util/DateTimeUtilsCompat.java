@@ -18,7 +18,7 @@ public class DateTimeUtilsCompat {
             pattern = internalGetBestDatePattern(locale);
             if (pattern == null) {
                 // Fallback to Locale.US if no pattern is found for every other locale.
-                pattern = internalGetBestDatePattern(locale);
+                pattern = internalGetBestDatePattern(Locale.US);
             }
         }
         return pattern;
@@ -36,7 +36,7 @@ public class DateTimeUtilsCompat {
             pattern = internalGetBestTimePattern(locale, is24Hour);
             if (pattern == null) {
                 // Fallback to Locale.US if no pattern is found for every other locale.
-                pattern = internalGetBestTimePattern(locale, is24Hour);
+                pattern = internalGetBestTimePattern(Locale.US, is24Hour);
             }
         }
         return pattern;
