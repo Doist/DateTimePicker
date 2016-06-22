@@ -1295,7 +1295,6 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
     }
 
     boolean mChangedDuringTouch = false;
-    private int mIsTouchingAmOrPm = -1;
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -1306,7 +1305,9 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
 
         float eventX = event.getX();
         float eventY = event.getY();
-        mIsTouchingAmOrPm = !mIs24HourMode ? getIsTouchingAmOrPm(eventX, eventY) : -1;
+
+        int isTouchingAmOrPm = !mIs24HourMode ? getIsTouchingAmOrPm(eventX, eventY) : -1;
+
         switch (action) {
             case MotionEvent.ACTION_DOWN: {
                 if (!mInputEnabled) {
@@ -1315,8 +1316,8 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
                 // This is a new event stream, reset whether the value changed.
                 mChangedDuringTouch = false;
 
-                if (mIsTouchingAmOrPm == AM || mIsTouchingAmOrPm == PM) {
-                    mAmOrPmPressed = mIsTouchingAmOrPm;
+                if (isTouchingAmOrPm == AM || isTouchingAmOrPm == PM) {
+                    mAmOrPmPressed = isTouchingAmOrPm;
                     invalidate();
                 } else {
                     mChangedDuringTouch |= handleTouchInput(
@@ -1328,8 +1329,8 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
                 if (!mInputEnabled) {
                     return true;
                 }
-                if (mIsTouchingAmOrPm == AM || mIsTouchingAmOrPm == PM) {
-                    mAmOrPmPressed = mIsTouchingAmOrPm;
+                if (isTouchingAmOrPm == AM || isTouchingAmOrPm == PM) {
+                    mAmOrPmPressed = isTouchingAmOrPm;
                     invalidate();
                 } else {
                     mAmOrPmPressed = -1;
@@ -1344,16 +1345,14 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
                     mListener.onValueSelected(ENABLE_PICKER_INDEX, 1, false);
                     return true;
                 }
-                if (mIsTouchingAmOrPm == AM || mIsTouchingAmOrPm == PM) {
+                if (isTouchingAmOrPm == AM || isTouchingAmOrPm == PM) {
                     mAmOrPmPressed = -1;
                     invalidate();
 
-                    if (mIsTouchingAmOrPm != mAmOrPm) {
-                        setAmOrPm(mIsTouchingAmOrPm);
-                        mListener.onValueSelected(AMPM_INDEX, mIsTouchingAmOrPm, false);
+                    if (isTouchingAmOrPm != mAmOrPm) {
+                        setAmOrPm(isTouchingAmOrPm);
+                        mListener.onValueSelected(AMPM_INDEX, isTouchingAmOrPm, false);
                     }
-
-                    mIsTouchingAmOrPm = -1;
                 } else {
                     autoAdvance = true;
 
