@@ -44,6 +44,7 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.TextView;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -180,6 +181,32 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
     private OnValueSelectedListener mListener;
 
     private boolean mInputEnabled = true;
+
+    // NOT a real index for the purpose of what's showing.
+    // See TimePickerClockDelegate.AMPM_INDEX.
+    private static final int AMPM_INDEX = 2;
+    // Also NOT a real index, just used for keyboard mode.
+    // See TimePickerClockDelegate.ENABLE_PICKER_INDEX.
+    private static final int ENABLE_PICKER_INDEX = 3;
+
+    private float mAmPmCircleRadiusMultiplier;
+
+    private final Paint mAmPmPaint = new Paint();
+    private int mSelectedAlpha;
+    private int mSelectedColor;
+    private int mUnselectedColor;
+    private int mAmPmTextColor;
+    private int mTouchedColor;
+
+    private String mAmText;
+    private String mPmText;
+
+    private boolean mDrawValuesReady = false;
+    private int mAmPmCircleRadius;
+    private int mAmXCenter;
+    private int mPmXCenter;
+    private int mAmPmYCenter;
+    private int mAmOrPmPressed = -1;
 
     public interface OnValueSelectedListener {
         void onValueSelected(int pickerIndex, int newValue, boolean autoAdvance);
@@ -338,46 +365,39 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
         mPaintCenter.setAntiAlias(true);
         mPaintCenter.setTextAlign(Paint.Align.CENTER);
 
+        int selectorColor = a.getColor(R.styleable.TimePicker_numbersSelectorColor,
+                res.getColor(R.color.timepicker_default_selector_color_material));
+
         mPaintSelector[HOURS][SELECTOR_CIRCLE] = new Paint();
         mPaintSelector[HOURS][SELECTOR_CIRCLE].setAntiAlias(true);
-        mColorSelector[HOURS][SELECTOR_CIRCLE] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+        mColorSelector[HOURS][SELECTOR_CIRCLE] = selectorColor;
 
         mPaintSelector[HOURS][SELECTOR_DOT] = new Paint();
         mPaintSelector[HOURS][SELECTOR_DOT].setAntiAlias(true);
-        mColorSelector[HOURS][SELECTOR_DOT] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+        mColorSelector[HOURS][SELECTOR_DOT] = selectorColor;
 
         mPaintSelector[HOURS][SELECTOR_LINE] = new Paint();
         mPaintSelector[HOURS][SELECTOR_LINE].setAntiAlias(true);
         mPaintSelector[HOURS][SELECTOR_LINE].setStrokeWidth(2);
-        mColorSelector[HOURS][SELECTOR_LINE] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+        mColorSelector[HOURS][SELECTOR_LINE] = selectorColor;
 
         mPaintSelector[MINUTES][SELECTOR_CIRCLE] = new Paint();
         mPaintSelector[MINUTES][SELECTOR_CIRCLE].setAntiAlias(true);
-        mColorSelector[MINUTES][SELECTOR_CIRCLE] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+        mColorSelector[MINUTES][SELECTOR_CIRCLE] = selectorColor;
 
         mPaintSelector[MINUTES][SELECTOR_DOT] = new Paint();
         mPaintSelector[MINUTES][SELECTOR_DOT].setAntiAlias(true);
-        mColorSelector[MINUTES][SELECTOR_DOT] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+        mColorSelector[MINUTES][SELECTOR_DOT] = selectorColor;
 
         mPaintSelector[MINUTES][SELECTOR_LINE] = new Paint();
         mPaintSelector[MINUTES][SELECTOR_LINE].setAntiAlias(true);
         mPaintSelector[MINUTES][SELECTOR_LINE].setStrokeWidth(2);
-        mColorSelector[MINUTES][SELECTOR_LINE] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+        mColorSelector[MINUTES][SELECTOR_LINE] = selectorColor;
 
-        mPaintBackground.setColor(a.getColor(R.styleable.TimePicker_numbersBackgroundColor,
-                res.getColor(R.color.timepicker_default_numbers_background_color_material)));
+        int bgColor = a.getColor(R.styleable.TimePicker_numbersBackgroundColor,
+                res.getColor(R.color.timepicker_default_numbers_background_color_material));
+
+        mPaintBackground.setColor(bgColor);
         mPaintBackground.setAntiAlias(true);
 
         if (DEBUG) {
@@ -413,6 +433,22 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
 
         mSelectionRadiusMultiplier = Float.parseFloat(
                 res.getString(R.string.timepicker_selection_radius_multiplier));
+
+        mAmPmCircleRadiusMultiplier = Float.parseFloat(
+            res.getString(R.string.timepicker_ampm_circle_radius_multiplier));
+
+        mAmPmPaint.setTypeface(mTypeface);
+        mAmPmPaint.setAntiAlias(true);
+        mAmPmPaint.setTextAlign(Paint.Align.CENTER);
+
+        mSelectedColor = a.getColor(R.styleable.TimePicker_amPmSelectedBackgroundColor, selectorColor);
+        mTouchedColor = a.getColor(R.styleable.TimePicker_amPmSelectedBackgroundColor, selectorColor);
+        mUnselectedColor = a.getColor(R.styleable.TimePicker_amPmBackgroundColor, bgColor);
+        mAmPmTextColor = a.getColor(R.styleable.TimePicker_amPmTextColor, numbersTextColor);
+
+        String[] amPmTexts = new DateFormatSymbols().getAmPmStrings();
+        mAmText = amPmTexts[0];
+        mPmText = amPmTexts[1];
 
         a.recycle();
 
@@ -689,6 +725,8 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
                 mShowHours ? ALPHA_TRANSPARENT : ALPHA_OPAQUE);
         mAlphaSelector[MINUTES][SELECTOR_LINE].setValue(
                 mShowHours ? ALPHA_TRANSPARENT : ALPHA_SELECTOR);
+
+        mSelectedAlpha = ALPHA_SELECTOR;
     }
 
     @Override
@@ -760,11 +798,77 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
 
         drawCenter(canvas);
 
+        if (!mIs24HourMode) {
+            drawAmPmCircle(canvas);
+        }
+
         if (DEBUG) {
             drawDebug(canvas);
         }
 
         canvas.restore();
+    }
+
+    private void drawAmPmCircle(Canvas canvas) {
+        int viewWidth = getWidth();
+        if (viewWidth == 0) {
+            return;
+        }
+
+        if (!mDrawValuesReady) {
+            int layoutXCenter = getWidth() / 2;
+            int layoutYCenter = getHeight() / 2;
+            int circleRadius =
+                    (int) (Math.min(layoutXCenter, layoutYCenter) * mCircleRadiusMultiplier[HOURS]);
+            mAmPmCircleRadius = (int) (circleRadius * mAmPmCircleRadiusMultiplier);
+            layoutYCenter += mAmPmCircleRadius * 0.75;
+            int textSize = mAmPmCircleRadius * 3 / 4;
+            mAmPmPaint.setTextSize(textSize);
+
+            // Line up the vertical center of the AM/PM circles with the bottom of the main circle.
+            mAmPmYCenter = layoutYCenter - mAmPmCircleRadius + circleRadius;
+            // Line up the horizontal edges of the AM/PM circles with the horizontal edges
+            // of the main circle.
+            mAmXCenter = layoutXCenter - circleRadius + mAmPmCircleRadius / 2;
+            mPmXCenter = layoutXCenter + circleRadius - mAmPmCircleRadius / 2;
+
+            mDrawValuesReady = true;
+        }
+
+        // We'll need to draw either a lighter blue (for selection), a darker blue (for touching)
+        // or white (for not selected).
+        int amColor = mUnselectedColor;
+        int amAlpha = Color.alpha(mUnselectedColor);
+        int pmColor = mUnselectedColor;
+        int pmAlpha = Color.alpha(mUnselectedColor);
+        if (mAmOrPm == AM) {
+            amColor = mSelectedColor;
+            amAlpha = mSelectedAlpha;
+        } else if (mAmOrPm == PM) {
+            pmColor = mSelectedColor;
+            pmAlpha = mSelectedAlpha;
+        }
+        if (mAmOrPmPressed == AM) {
+            amColor = mTouchedColor;
+            amAlpha = Color.alpha(mTouchedColor);
+        } else if (mAmOrPmPressed == PM) {
+            pmColor = mTouchedColor;
+            pmAlpha = Color.alpha(mTouchedColor);
+        }
+
+        // Draw the two circles.
+        mAmPmPaint.setColor(amColor);
+        mAmPmPaint.setAlpha(amAlpha);
+        canvas.drawCircle(mAmXCenter, mAmPmYCenter, mAmPmCircleRadius, mAmPmPaint);
+        mAmPmPaint.setColor(pmColor);
+        mAmPmPaint.setAlpha(pmAlpha);
+        canvas.drawCircle(mPmXCenter, mAmPmYCenter, mAmPmCircleRadius, mAmPmPaint);
+
+        // Draw the AM/PM texts on top.
+        mAmPmPaint.setColor(mAmPmTextColor);
+        int textYCenter = mAmPmYCenter - (int) (mAmPmPaint.descent() + mAmPmPaint.ascent()) / 2;
+        canvas.drawText(mAmText, mAmXCenter, textYCenter, mAmPmPaint);
+        canvas.drawText(mPmText, mPmXCenter, textYCenter, mAmPmPaint);
     }
 
     private void drawCircleBackground(Canvas canvas) {
@@ -1198,32 +1302,75 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (!mInputEnabled) {
-            return true;
-        }
 
         final int action = event.getActionMasked();
-        if (action == MotionEvent.ACTION_MOVE
-                || action == MotionEvent.ACTION_UP
-                || action == MotionEvent.ACTION_DOWN) {
-            boolean forceSelection = false;
-            boolean autoAdvance = false;
+        boolean forceSelection = false;
+        boolean autoAdvance = false;
 
-            if (action == MotionEvent.ACTION_DOWN) {
+        float eventX = event.getX();
+        float eventY = event.getY();
+
+        int isTouchingAmOrPm = !mIs24HourMode ? getIsTouchingAmOrPm(eventX, eventY) : -1;
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                if (!mInputEnabled) {
+                    return true;
+                }
                 // This is a new event stream, reset whether the value changed.
                 mChangedDuringTouch = false;
-            } else if (action == MotionEvent.ACTION_UP) {
-                autoAdvance = true;
 
-                // If we saw a down/up pair without the value changing, assume
-                // this is a single-tap selection and force a change.
-                if (!mChangedDuringTouch) {
-                    forceSelection = true;
+                if (isTouchingAmOrPm == AM || isTouchingAmOrPm == PM) {
+                    mAmOrPmPressed = isTouchingAmOrPm;
+                    invalidate();
+                } else {
+                    mChangedDuringTouch |= handleTouchInput(
+                            event.getX(), event.getY(), forceSelection, autoAdvance);
                 }
+                break;
             }
+            case MotionEvent.ACTION_MOVE: {
+                if (!mInputEnabled) {
+                    return true;
+                }
+                if (isTouchingAmOrPm == AM || isTouchingAmOrPm == PM) {
+                    mAmOrPmPressed = isTouchingAmOrPm;
+                    invalidate();
+                } else {
+                    mAmOrPmPressed = -1;
+                    invalidate();
+                    mChangedDuringTouch |= handleTouchInput(
+                            event.getX(), event.getY(), forceSelection, autoAdvance);
+                }
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                if (!mInputEnabled) {
+                    mListener.onValueSelected(ENABLE_PICKER_INDEX, 1, false);
+                    return true;
+                }
+                if (isTouchingAmOrPm == AM || isTouchingAmOrPm == PM) {
+                    mAmOrPmPressed = -1;
+                    invalidate();
 
-            mChangedDuringTouch |= handleTouchInput(
-                    event.getX(), event.getY(), forceSelection, autoAdvance);
+                    if (isTouchingAmOrPm != mAmOrPm) {
+                        setAmOrPm(isTouchingAmOrPm);
+                        mListener.onValueSelected(AMPM_INDEX, isTouchingAmOrPm, false);
+                    }
+                } else {
+                    autoAdvance = true;
+
+                    // If we saw a down/up pair without the value changing, assume
+                    // this is a single-tap selection and force a change.
+                    if (!mChangedDuringTouch) {
+                        forceSelection = true;
+                    }
+                    mChangedDuringTouch |= handleTouchInput(
+                            event.getX(), event.getY(), forceSelection, autoAdvance);
+                }
+                break;
+            }
+            default:
         }
 
         return true;
@@ -1291,6 +1438,29 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
     public void setInputEnabled(boolean inputEnabled) {
         mInputEnabled = inputEnabled;
         invalidate();
+    }
+
+    private int getIsTouchingAmOrPm(float xCoord, float yCoord) {
+        if (!mDrawValuesReady) {
+            return -1;
+        }
+
+        int squaredYDistance = (int) ((yCoord - mAmPmYCenter) * (yCoord - mAmPmYCenter));
+
+        int distanceToAmCenter =
+                (int) Math.sqrt((xCoord - mAmXCenter) * (xCoord - mAmXCenter) + squaredYDistance);
+        if (distanceToAmCenter <= mAmPmCircleRadius) {
+            return AM;
+        }
+
+        int distanceToPmCenter =
+                (int) Math.sqrt((xCoord - mPmXCenter) * (xCoord - mPmXCenter) + squaredYDistance);
+        if (distanceToPmCenter <= mAmPmCircleRadius) {
+            return PM;
+        }
+
+        // Neither was close enough.
+        return -1;
     }
 
     private class RadialPickerTouchHelper extends ExploreByTouchHelper {

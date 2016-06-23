@@ -52,4 +52,7 @@
 
      <!-- DO NOT TRANSLATE -->
      <string name="day_of_week_label_typeface" translatable="false">sans-serif</string>
+
+     <!-- DO NOT TRANSLATE -->
+     <string name="timepicker_ampm_circle_radius_multiplier" translatable="false">0.22</string>
 </resources>
