@@ -182,8 +182,12 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
 
     private boolean mInputEnabled = true;
 
+    // NOT a real index for the purpose of what's showing.
+    // See TimePickerClockDelegate.AMPM_INDEX.
     private static final int AMPM_INDEX = 2;
-    private static final int ENABLE_PICKER_INDEX =3;
+    // Also NOT a real index, just used for keyboard mode.
+    // See TimePickerClockDelegate.ENABLE_PICKER_INDEX.
+    private static final int ENABLE_PICKER_INDEX = 3;
 
     private float mAmPmCircleRadiusMultiplier;
 
