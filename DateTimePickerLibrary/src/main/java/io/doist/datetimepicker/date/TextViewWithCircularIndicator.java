@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 import io.doist.datetimepicker.R;
 
-class TextViewWithCircularIndicator extends TextView {
+public class TextViewWithCircularIndicator extends TextView {
 
     private static final int SELECTED_CIRCLE_ALPHA = 60;
 
