@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:27.0.1'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
 
-    compile project(':DateTimePickerLibrary')
+    implementation project(':DateTimePickerLibrary')
 }
