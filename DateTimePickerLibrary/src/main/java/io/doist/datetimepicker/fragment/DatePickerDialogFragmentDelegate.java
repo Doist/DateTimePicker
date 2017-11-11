@@ -37,7 +37,7 @@ public class DatePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
     @Override
     protected View onCreateDialogView(LayoutInflater inflater, Bundle savedInstanceState, Bundle arguments) {
         View view = inflater.inflate(R.layout.date_picker_dialog, null);
-        mDatePicker = (DatePicker) view.findViewById(R.id.datePicker);
+        mDatePicker = view.findViewById(R.id.datePicker);
         if (savedInstanceState == null) {
             int year = arguments.getInt(KEY_YEAR);
             int monthOfYear = arguments.getInt(KEY_MONTH_OF_YEAR);

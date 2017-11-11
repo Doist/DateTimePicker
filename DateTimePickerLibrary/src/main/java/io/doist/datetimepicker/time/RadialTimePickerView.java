@@ -31,6 +31,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.support.v4.widget.ExploreByTouchHelper;
@@ -342,39 +343,39 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
         mPaintSelector[HOURS][SELECTOR_CIRCLE].setAntiAlias(true);
         mColorSelector[HOURS][SELECTOR_CIRCLE] = a.getColor(
                 R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
 
         mPaintSelector[HOURS][SELECTOR_DOT] = new Paint();
         mPaintSelector[HOURS][SELECTOR_DOT].setAntiAlias(true);
         mColorSelector[HOURS][SELECTOR_DOT] = a.getColor(
                 R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
 
         mPaintSelector[HOURS][SELECTOR_LINE] = new Paint();
         mPaintSelector[HOURS][SELECTOR_LINE].setAntiAlias(true);
         mPaintSelector[HOURS][SELECTOR_LINE].setStrokeWidth(2);
         mColorSelector[HOURS][SELECTOR_LINE] = a.getColor(
                 R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
 
         mPaintSelector[MINUTES][SELECTOR_CIRCLE] = new Paint();
         mPaintSelector[MINUTES][SELECTOR_CIRCLE].setAntiAlias(true);
         mColorSelector[MINUTES][SELECTOR_CIRCLE] = a.getColor(
                 R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
 
         mPaintSelector[MINUTES][SELECTOR_DOT] = new Paint();
         mPaintSelector[MINUTES][SELECTOR_DOT].setAntiAlias(true);
         mColorSelector[MINUTES][SELECTOR_DOT] = a.getColor(
                 R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
 
         mPaintSelector[MINUTES][SELECTOR_LINE] = new Paint();
         mPaintSelector[MINUTES][SELECTOR_LINE].setAntiAlias(true);
         mPaintSelector[MINUTES][SELECTOR_LINE].setStrokeWidth(2);
         mColorSelector[MINUTES][SELECTOR_LINE] = a.getColor(
                 R.styleable.TimePicker_numbersSelectorColor,
-                R.color.timepicker_default_selector_color_material);
+                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
 
         mPaintBackground.setColor(a.getColor(R.styleable.TimePicker_numbersBackgroundColor,
                 res.getColor(R.color.timepicker_default_numbers_background_color_material)));

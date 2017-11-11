@@ -16,7 +16,7 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="done_label" msgid="7007948707597430919">"Կատարված է"</string>
+    <string name="done_label" msgid="7007948707597430919">"Պատրաստ է"</string>
     <string name="select_hours" msgid="7651068754188418859">"Ընտրեք ժամերը"</string>
     <string name="select_minutes" msgid="8327182090226828481">"Ընտրեք րոպեները"</string>
     <string name="day_picker_description" msgid="3968620852217927702">"Ամսաթվի ընտրության պատուհան"</string>

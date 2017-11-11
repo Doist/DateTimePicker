@@ -142,11 +142,11 @@ class TimePickerClockDelegate extends TimePicker.AbstractTimePickerDelegate impl
         mHeaderView.setBackground(a.getDrawable(R.styleable.TimePicker_headerBackground));
 
         // Set up hour/minute labels.
-        mHourView = (TextView) mHeaderView.findViewById(R.id.hours);
+        mHourView = mHeaderView.findViewById(R.id.hours);
         mHourView.setOnClickListener(mClickListener);
         ViewCompat.setAccessibilityDelegate(mHourView, new ClickActionDelegate(context, R.string.select_hours));
-        mSeparatorView = (TextView) mHeaderView.findViewById(R.id.separator);
-        mMinuteView = (TextView) mHeaderView.findViewById(R.id.minutes);
+        mSeparatorView = mHeaderView.findViewById(R.id.separator);
+        mMinuteView = mHeaderView.findViewById(R.id.minutes);
         mMinuteView.setOnClickListener(mClickListener);
         ViewCompat.setAccessibilityDelegate(mMinuteView, new ClickActionDelegate(context, R.string.select_minutes));
 
@@ -174,10 +174,10 @@ class TimePickerClockDelegate extends TimePicker.AbstractTimePickerDelegate impl
         // Set up AM/PM labels.
         // Set up AM/PM labels.
         mAmPmLayout = mHeaderView.findViewById(R.id.ampm_layout);
-        mAmLabel = (CheckedTextView) mAmPmLayout.findViewById(R.id.am_label);
+        mAmLabel = mAmPmLayout.findViewById(R.id.am_label);
         mAmLabel.setText(mAmText);
         mAmLabel.setOnClickListener(mClickListener);
-        mPmLabel = (CheckedTextView) mAmPmLayout.findViewById(R.id.pm_label);
+        mPmLabel = mAmPmLayout.findViewById(R.id.pm_label);
         mPmLabel.setText(mPmText);
         mPmLabel.setOnClickListener(mClickListener);
 
@@ -195,7 +195,7 @@ class TimePickerClockDelegate extends TimePicker.AbstractTimePickerDelegate impl
         context.getTheme().resolveAttribute(android.R.attr.disabledAlpha, outValue, true);
         mDisabledAlpha = outValue.getFloat();
 
-        mRadialTimePickerView = (RadialTimePickerView) mainView.findViewById(R.id.radial_picker);
+        mRadialTimePickerView = mainView.findViewById(R.id.radial_picker);
 
         setupListeners();
 
@@ -977,7 +977,7 @@ class TimePickerClockDelegate extends TimePicker.AbstractTimePickerDelegate impl
         }
     }
 
-    private int getValFromKeyCode(int keyCode) {
+    private static int getValFromKeyCode(int keyCode) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_0:
                 return 0;

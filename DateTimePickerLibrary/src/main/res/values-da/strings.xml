@@ -16,7 +16,7 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="done_label" msgid="7007948707597430919">"Færdig"</string>
+    <string name="done_label" msgid="7007948707597430919">"Udfør"</string>
     <string name="select_hours" msgid="7651068754188418859">"Vælg timer"</string>
     <string name="select_minutes" msgid="8327182090226828481">"Vælg minutter"</string>
     <string name="day_picker_description" msgid="3968620852217927702">"Månedsgitter med dage"</string>

@@ -126,16 +126,16 @@ class DatePickerCalendarDelegate extends DatePicker.AbstractDatePickerDelegate i
         final View mainView = inflater.inflate(layoutResourceId, null);
         mDelegator.addView(mainView);
 
-        mDayOfWeekView = (TextView) mainView.findViewById(R.id.date_picker_header);
+        mDayOfWeekView = mainView.findViewById(R.id.date_picker_header);
 
         // Layout that contains the current date and day name header.
-        final LinearLayout dateLayout = (LinearLayout) mainView.findViewById(R.id.day_picker_selector_layout);
-        mMonthDayYearLayout = (LinearLayout) mainView.findViewById(R.id.date_picker_month_day_year_layout);
-        mMonthAndDayLayout = (LinearLayout) mainView.findViewById(R.id.date_picker_month_and_day_layout);
+        final LinearLayout dateLayout = mainView.findViewById(R.id.day_picker_selector_layout);
+        mMonthDayYearLayout = mainView.findViewById(R.id.date_picker_month_day_year_layout);
+        mMonthAndDayLayout = mainView.findViewById(R.id.date_picker_month_and_day_layout);
         mMonthAndDayLayout.setOnClickListener(mClickListener);
-        mHeaderMonthTextView = (TextView) mainView.findViewById(R.id.date_picker_month);
-        mHeaderDayOfMonthTextView = (TextView) mainView.findViewById(R.id.date_picker_day);
-        mHeaderYearTextView = (TextView) mainView.findViewById(R.id.date_picker_year);
+        mHeaderMonthTextView = mainView.findViewById(R.id.date_picker_month);
+        mHeaderDayOfMonthTextView = mainView.findViewById(R.id.date_picker_day);
+        mHeaderYearTextView = mainView.findViewById(R.id.date_picker_year);
         mHeaderYearTextView.setOnClickListener(mClickListener);
 
         // Obtain default highlight color from the theme.
@@ -210,7 +210,7 @@ class DatePickerCalendarDelegate extends DatePicker.AbstractDatePickerDelegate i
         mYearPickerDescription = res.getString(R.string.year_picker_description);
         mSelectYear = res.getString(R.string.select_year);
 
-        mAnimator = (AccessibleDateAnimator) mainView.findViewById(R.id.animator);
+        mAnimator = mainView.findViewById(R.id.animator);
         mAnimator.addView(mDayPickerView);
         mAnimator.addView(mYearPickerView);
         mAnimator.setDateMillis(mCurrentDate.getTimeInMillis());

@@ -16,7 +16,7 @@
  -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="done_label" msgid="7007948707597430919">"पूर्ण"</string>
+    <string name="done_label" msgid="7007948707597430919">"हो गया"</string>
     <string name="select_hours" msgid="7651068754188418859">"घंटे चुनें"</string>
     <string name="select_minutes" msgid="8327182090226828481">"मिनट चुनें"</string>
     <string name="day_picker_description" msgid="3968620852217927702">"दिनों की माह ग्रिड"</string>

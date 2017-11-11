@@ -37,13 +37,13 @@ public class TimePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
     @Override
     protected View onCreateDialogView(LayoutInflater inflater, Bundle savedInstanceState, Bundle arguments) {
         View view = inflater.inflate(R.layout.time_picker_dialog, null);
-        mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
+        mTimePicker = view.findViewById(R.id.timePicker);
         if (savedInstanceState == null) {
             int hourOfDay = arguments.getInt(KEY_HOUR_OF_DAY);
             int minute = arguments.getInt(KEY_MINUTE);
             boolean is24Hour = arguments.getBoolean(KEY_IS_24_HOUR);
 
-            mTimePicker = (TimePicker) view.findViewById(R.id.timePicker);
+            mTimePicker = view.findViewById(R.id.timePicker);
             mTimePicker.setCurrentHour(hourOfDay);
             mTimePicker.setCurrentMinute(minute);
             mTimePicker.setIs24Hour(is24Hour);
