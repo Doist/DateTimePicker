@@ -1,2 +1,2 @@
-include ':DateTimePickerSamples'
 include ':DateTimePickerLibrary'
+include ':DateTimePickerSamples'
