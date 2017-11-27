@@ -706,13 +706,6 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
         mCircleRadius[HOURS_INNER] = min * mCircleRadiusMultiplier[HOURS];
         mCircleRadius[MINUTES] = min * mCircleRadiusMultiplier[MINUTES];
 
-        mMinHypotenuseForInnerNumber = (int) (mCircleRadius[HOURS]
-                * mNumbersRadiusMultiplier[HOURS_INNER]) - mSelectionRadius[HOURS];
-        mMaxHypotenuseForOuterNumber = (int) (mCircleRadius[HOURS]
-                * mNumbersRadiusMultiplier[HOURS]) + mSelectionRadius[HOURS];
-        mHalfwayHypotenusePoint = (int) (mCircleRadius[HOURS]
-                * ((mNumbersRadiusMultiplier[HOURS] + mNumbersRadiusMultiplier[HOURS_INNER]) / 2));
-
         mTextSize[HOURS] = mCircleRadius[HOURS] * mTextSizeMultiplier[HOURS];
         mTextSize[MINUTES] = mCircleRadius[MINUTES] * mTextSizeMultiplier[MINUTES];
 
@@ -726,6 +719,13 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
         mSelectionRadius[HOURS] = (int) (mCircleRadius[HOURS] * mSelectionRadiusMultiplier);
         mSelectionRadius[HOURS_INNER] = mSelectionRadius[HOURS];
         mSelectionRadius[MINUTES] = (int) (mCircleRadius[MINUTES] * mSelectionRadiusMultiplier);
+
+        mMinHypotenuseForInnerNumber = (int) (mCircleRadius[HOURS]
+                * mNumbersRadiusMultiplier[HOURS_INNER]) - mSelectionRadius[HOURS];
+        mMaxHypotenuseForOuterNumber = (int) (mCircleRadius[HOURS]
+                * mNumbersRadiusMultiplier[HOURS]) + mSelectionRadius[HOURS];
+        mHalfwayHypotenusePoint = (int) (mCircleRadius[HOURS]
+                * ((mNumbersRadiusMultiplier[HOURS] + mNumbersRadiusMultiplier[HOURS_INNER]) / 2));
 
         mTouchHelper.invalidateRoot();
     }
