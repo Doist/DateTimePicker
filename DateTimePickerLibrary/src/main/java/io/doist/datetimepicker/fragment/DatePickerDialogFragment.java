@@ -30,7 +30,7 @@ import io.doist.datetimepicker.date.OnDateSetListener;
 public class DatePickerDialogFragment extends DialogFragment {
     public static final String TAG = DatePickerDialogFragment.class.getName();
 
-    private DatePickerDialogFragmentDelegate mDelegate;
+    protected DatePickerDialogFragmentDelegate mDelegate;
 
     public DatePickerDialogFragment() {
         mDelegate = onCreateDatePickerDialogFragmentDelegate();
