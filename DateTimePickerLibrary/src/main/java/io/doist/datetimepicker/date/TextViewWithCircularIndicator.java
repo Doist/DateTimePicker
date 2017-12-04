@@ -23,12 +23,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import io.doist.datetimepicker.R;
 
-public class TextViewWithCircularIndicator extends TextView {
+public class TextViewWithCircularIndicator extends AppCompatTextView {
 
     private static final int SELECTED_CIRCLE_ALPHA = 60;
 
