@@ -339,43 +339,9 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
         mPaintCenter.setAntiAlias(true);
         mPaintCenter.setTextAlign(Paint.Align.CENTER);
 
-        mPaintSelector[HOURS][SELECTOR_CIRCLE] = new Paint();
-        mPaintSelector[HOURS][SELECTOR_CIRCLE].setAntiAlias(true);
-        mColorSelector[HOURS][SELECTOR_CIRCLE] = a.getColor(
+        setSelectorColor(a.getColor(
                 R.styleable.TimePicker_numbersSelectorColor,
-                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
-
-        mPaintSelector[HOURS][SELECTOR_DOT] = new Paint();
-        mPaintSelector[HOURS][SELECTOR_DOT].setAntiAlias(true);
-        mColorSelector[HOURS][SELECTOR_DOT] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
-
-        mPaintSelector[HOURS][SELECTOR_LINE] = new Paint();
-        mPaintSelector[HOURS][SELECTOR_LINE].setAntiAlias(true);
-        mPaintSelector[HOURS][SELECTOR_LINE].setStrokeWidth(2);
-        mColorSelector[HOURS][SELECTOR_LINE] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
-
-        mPaintSelector[MINUTES][SELECTOR_CIRCLE] = new Paint();
-        mPaintSelector[MINUTES][SELECTOR_CIRCLE].setAntiAlias(true);
-        mColorSelector[MINUTES][SELECTOR_CIRCLE] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
-
-        mPaintSelector[MINUTES][SELECTOR_DOT] = new Paint();
-        mPaintSelector[MINUTES][SELECTOR_DOT].setAntiAlias(true);
-        mColorSelector[MINUTES][SELECTOR_DOT] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
-
-        mPaintSelector[MINUTES][SELECTOR_LINE] = new Paint();
-        mPaintSelector[MINUTES][SELECTOR_LINE].setAntiAlias(true);
-        mPaintSelector[MINUTES][SELECTOR_LINE].setStrokeWidth(2);
-        mColorSelector[MINUTES][SELECTOR_LINE] = a.getColor(
-                R.styleable.TimePicker_numbersSelectorColor,
-                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material));
+                ContextCompat.getColor(context, R.color.timepicker_default_selector_color_material)));
 
         mPaintBackground.setColor(a.getColor(R.styleable.TimePicker_numbersBackgroundColor,
                 res.getColor(R.color.timepicker_default_numbers_background_color_material)));
@@ -429,6 +395,34 @@ public class RadialTimePickerView extends View implements View.OnTouchListener {
         setCurrentMinuteInternal(currentMinute, false);
 
         setHapticFeedbackEnabled(true);
+    }
+
+    public void setSelectorColor(int color) {
+        mPaintSelector[HOURS][SELECTOR_CIRCLE] = new Paint();
+        mPaintSelector[HOURS][SELECTOR_CIRCLE].setAntiAlias(true);
+        mColorSelector[HOURS][SELECTOR_CIRCLE] = color;
+
+        mPaintSelector[HOURS][SELECTOR_DOT] = new Paint();
+        mPaintSelector[HOURS][SELECTOR_DOT].setAntiAlias(true);
+        mColorSelector[HOURS][SELECTOR_DOT] = color;
+
+        mPaintSelector[HOURS][SELECTOR_LINE] = new Paint();
+        mPaintSelector[HOURS][SELECTOR_LINE].setAntiAlias(true);
+        mPaintSelector[HOURS][SELECTOR_LINE].setStrokeWidth(2);
+        mColorSelector[HOURS][SELECTOR_LINE] = color;
+
+        mPaintSelector[MINUTES][SELECTOR_CIRCLE] = new Paint();
+        mPaintSelector[MINUTES][SELECTOR_CIRCLE].setAntiAlias(true);
+        mColorSelector[MINUTES][SELECTOR_CIRCLE] = color;
+
+        mPaintSelector[MINUTES][SELECTOR_DOT] = new Paint();
+        mPaintSelector[MINUTES][SELECTOR_DOT].setAntiAlias(true);
+        mColorSelector[MINUTES][SELECTOR_DOT] = color;
+
+        mPaintSelector[MINUTES][SELECTOR_LINE] = new Paint();
+        mPaintSelector[MINUTES][SELECTOR_LINE].setAntiAlias(true);
+        mPaintSelector[MINUTES][SELECTOR_LINE].setStrokeWidth(2);
+        mColorSelector[MINUTES][SELECTOR_LINE] = color;
     }
 
     /**
