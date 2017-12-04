@@ -17,9 +17,9 @@ public class DatePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
     private static final String KEY_MONTH_OF_YEAR = "month";
     private static final String KEY_DAY_OF_MONTH = "day";
 
-    private DatePicker mDatePicker;
+    protected DatePicker mDatePicker;
 
-    private OnDateSetListener mOnDateSetListener;
+    protected OnDateSetListener mOnDateSetListener;
 
     public static Bundle createArguments(int year, int monthOfYear, int dayOfMonth) {
         Bundle arguments = new Bundle();

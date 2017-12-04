@@ -17,9 +17,9 @@ public class TimePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
     private static final String KEY_MINUTE = "minute";
     private static final String KEY_IS_24_HOUR = "is24Hour";
 
-    private TimePicker mTimePicker;
+    protected TimePicker mTimePicker;
 
-    private OnTimeSetListener mOnTimeSetListener;
+    protected OnTimeSetListener mOnTimeSetListener;
 
     public static Bundle createArguments(int hourOfDay, int minute, boolean is24Hour) {
         Bundle arguments = new Bundle();
