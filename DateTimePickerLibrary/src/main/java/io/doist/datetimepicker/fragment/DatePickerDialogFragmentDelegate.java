@@ -80,15 +80,19 @@ public class DatePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
         mDatePicker.init(year, monthOfYear, dayOfMonth, this);
     }
 
-    public void setOnDateSetListener(OnDateSetListener listener) {
-        mOnDateSetListener = listener;
+    public void updateDate(int year, int monthOfYear, int dayOfMonth) {
+        mDatePicker.updateDate(year, monthOfYear, dayOfMonth);
     }
 
     public DatePicker getDatePicker() {
         return mDatePicker;
     }
 
-    public void updateDate(int year, int monthOfYear, int dayOfMonth) {
-        mDatePicker.updateDate(year, monthOfYear, dayOfMonth);
+    public void setOnDateSetListener(OnDateSetListener listener) {
+        mOnDateSetListener = listener;
+    }
+
+    public OnDateSetListener getOnDateSetListener() {
+        return mOnDateSetListener;
     }
 }

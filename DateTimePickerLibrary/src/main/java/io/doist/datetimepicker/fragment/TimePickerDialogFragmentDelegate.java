@@ -77,21 +77,25 @@ public class TimePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
                     });
     }
 
-    public void setOnTimeSetListener(OnTimeSetListener listener) {
-        mOnTimeSetListener = listener;
-    }
-
     @Override
     public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
         // Do nothing.
+    }
+
+    public void updateTime(int hourOfDay, int minuteOfHour) {
+        mTimePicker.setCurrentHour(hourOfDay);
+        mTimePicker.setCurrentMinute(minuteOfHour);
     }
 
     public TimePicker getTimePicker() {
         return mTimePicker;
     }
 
-    public void updateTime(int hourOfDay, int minuteOfHour) {
-        mTimePicker.setCurrentHour(hourOfDay);
-        mTimePicker.setCurrentMinute(minuteOfHour);
+    public void setOnTimeSetListener(OnTimeSetListener listener) {
+        mOnTimeSetListener = listener;
+    }
+
+    public OnTimeSetListener getOnTimeSetListener() {
+        return mOnTimeSetListener;
     }
 }
