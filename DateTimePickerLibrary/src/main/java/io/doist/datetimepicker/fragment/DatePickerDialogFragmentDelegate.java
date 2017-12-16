@@ -17,9 +17,9 @@ public class DatePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
     private static final String KEY_MONTH_OF_YEAR = "month";
     private static final String KEY_DAY_OF_MONTH = "day";
 
-    private DatePicker mDatePicker;
+    protected DatePicker mDatePicker;
 
-    private OnDateSetListener mOnDateSetListener;
+    protected OnDateSetListener mOnDateSetListener;
 
     public static Bundle createArguments(int year, int monthOfYear, int dayOfMonth) {
         Bundle arguments = new Bundle();
@@ -80,15 +80,19 @@ public class DatePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
         mDatePicker.init(year, monthOfYear, dayOfMonth, this);
     }
 
-    public void setOnDateSetListener(OnDateSetListener listener) {
-        mOnDateSetListener = listener;
+    public void updateDate(int year, int monthOfYear, int dayOfMonth) {
+        mDatePicker.updateDate(year, monthOfYear, dayOfMonth);
     }
 
     public DatePicker getDatePicker() {
         return mDatePicker;
     }
 
-    public void updateDate(int year, int monthOfYear, int dayOfMonth) {
-        mDatePicker.updateDate(year, monthOfYear, dayOfMonth);
+    public void setOnDateSetListener(OnDateSetListener listener) {
+        mOnDateSetListener = listener;
+    }
+
+    public OnDateSetListener getOnDateSetListener() {
+        return mOnDateSetListener;
     }
 }

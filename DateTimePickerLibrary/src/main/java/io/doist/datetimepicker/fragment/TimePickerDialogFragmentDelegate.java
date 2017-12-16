@@ -17,9 +17,9 @@ public class TimePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
     private static final String KEY_MINUTE = "minute";
     private static final String KEY_IS_24_HOUR = "is24Hour";
 
-    private TimePicker mTimePicker;
+    protected TimePicker mTimePicker;
 
-    private OnTimeSetListener mOnTimeSetListener;
+    protected OnTimeSetListener mOnTimeSetListener;
 
     public static Bundle createArguments(int hourOfDay, int minute, boolean is24Hour) {
         Bundle arguments = new Bundle();
@@ -77,21 +77,25 @@ public class TimePickerDialogFragmentDelegate extends PickerDialogFragmentDelega
                     });
     }
 
-    public void setOnTimeSetListener(OnTimeSetListener listener) {
-        mOnTimeSetListener = listener;
-    }
-
     @Override
     public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
         // Do nothing.
+    }
+
+    public void updateTime(int hourOfDay, int minuteOfHour) {
+        mTimePicker.setCurrentHour(hourOfDay);
+        mTimePicker.setCurrentMinute(minuteOfHour);
     }
 
     public TimePicker getTimePicker() {
         return mTimePicker;
     }
 
-    public void updateTime(int hourOfDay, int minuteOfHour) {
-        mTimePicker.setCurrentHour(hourOfDay);
-        mTimePicker.setCurrentMinute(minuteOfHour);
+    public void setOnTimeSetListener(OnTimeSetListener listener) {
+        mOnTimeSetListener = listener;
+    }
+
+    public OnTimeSetListener getOnTimeSetListener() {
+        return mOnTimeSetListener;
     }
 }

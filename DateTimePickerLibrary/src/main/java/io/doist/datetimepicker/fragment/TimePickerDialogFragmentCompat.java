@@ -34,7 +34,7 @@ import io.doist.datetimepicker.time.TimePicker;
 public class TimePickerDialogFragmentCompat extends DialogFragment {
     public static final String TAG = TimePickerDialogFragmentCompat.class.getName();
 
-    private TimePickerDialogFragmentDelegate mDelegate;
+    protected TimePickerDialogFragmentDelegate mDelegate;
 
     public TimePickerDialogFragmentCompat() {
         mDelegate = onCreateTimePickerDialogFragmentDelegate();
