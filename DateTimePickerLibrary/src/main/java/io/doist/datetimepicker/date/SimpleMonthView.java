@@ -453,7 +453,10 @@ class SimpleMonthView extends View {
             } else {
                 dayLabel = getDayLabelCompat(mDayLabelCalendar);
             }
-            final int x = (2 * i + 1) * dayWidthHalf + mPadding;
+            int x = (2 * i + 1) * dayWidthHalf + mPadding;
+            if (isLayoutRtl()) {
+                x = (mWidth + 2 * mPadding) - x;
+            }
             canvas.drawText(dayLabel, x, y, mMonthDayLabelPaint);
         }
     }
@@ -477,6 +480,9 @@ class SimpleMonthView extends View {
         int j = findDayOffset();
         for (int day = 1; day <= mNumCells; day++) {
             int x = (2 * j + 1) * dayWidthHalf + mPadding;
+            if (isLayoutRtl()) {
+                x = (mWidth + 2 * mPadding) - x;
+            }
             if (mSelectedDay == day) {
                 canvas.drawCircle(x, y - (mMiniDayNumberTextSize / 3), mDaySelectedCircleSize,
                                   mDayNumberSelectedPaint);
@@ -501,6 +507,10 @@ class SimpleMonthView extends View {
     private int findDayOffset() {
         return (mDayOfWeekStart < mWeekStart ? (mDayOfWeekStart + mNumDays) : mDayOfWeekStart)
                 - mWeekStart;
+    }
+
+    private boolean isLayoutRtl() {
+        return (getLayoutDirection() == LAYOUT_DIRECTION_RTL);
     }
 
     /**
@@ -580,6 +590,13 @@ class SimpleMonthView extends View {
         }
         mTouchHelper.setFocusedVirtualView(day.get(Calendar.DAY_OF_MONTH));
         return true;
+    }
+
+    @Override
+    public void onRtlPropertiesChanged(int layoutDirection) {
+        super.onRtlPropertiesChanged(layoutDirection);
+
+        requestLayout();
     }
 
     /**
