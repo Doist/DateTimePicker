@@ -203,7 +203,7 @@ class SimpleMonthView extends View {
         mMonthDayLabelPaint.setColor(mNormalTextColor);
 
         mDisabledTextColor = colors.getColorForState(
-                EMPTY_STATE_SET, res.getColor( R.color.datepicker_default_disabled_text_color_holo_light));
+                EMPTY_STATE_SET, res.getColor(R.color.datepicker_default_disabled_text_color_holo_light));
         mDayNumberDisabledPaint.setColor(mDisabledTextColor);
 
         mSelectedDayColor = colors.getColorForState(
@@ -311,13 +311,13 @@ class SimpleMonthView extends View {
      * default to no focus month if no value is passed in. The only required parameter is the
      * week start.
      *
-     * @param selectedDay the selected day of the month, or -1 for no selection.
-     * @param month the month.
-     * @param year the year.
-     * @param weekStart which day the week should start on. {@link Calendar#SUNDAY} through
-     *        {@link Calendar#SATURDAY}.
+     * @param selectedDay     the selected day of the month, or -1 for no selection.
+     * @param month           the month.
+     * @param year            the year.
+     * @param weekStart       which day the week should start on. {@link Calendar#SUNDAY} through
+     *                        {@link Calendar#SATURDAY}.
      * @param enabledDayStart the first enabled day.
-     * @param enabledDayEnd the last enabled day.
+     * @param enabledDayEnd   the last enabled day.
      */
     void setMonthParams(int selectedDay, int month, int year, int weekStart, int enabledDayStart,
                         int enabledDayEnd) {
@@ -472,8 +472,7 @@ class SimpleMonthView extends View {
      * Draws the month days.
      */
     private void drawDays(Canvas canvas) {
-        int y = (((mRowHeight + mMiniDayNumberTextSize) / 2) - DAY_SEPARATOR_WIDTH)
-                + mMonthHeaderSize;
+        int y = (((mRowHeight + mMiniDayNumberTextSize) / 2) - DAY_SEPARATOR_WIDTH) + mMonthHeaderSize;
         int dayWidthHalf = (mWidth - mPadding * 2) / (mNumDays * 2);
         int j = findDayOffset();
         for (int day = 1; day <= mNumCells; day++) {
@@ -547,7 +546,7 @@ class SimpleMonthView extends View {
 
     /**
      * @return The date that has accessibility focus, or {@code null} if no date
-     *         has focus
+     * has focus
      */
     Calendar getAccessibilityFocus() {
         final int day = mTouchHelper.getFocusedVirtualView();
@@ -572,7 +571,7 @@ class SimpleMonthView extends View {
      *
      * @param day The date which should receive focus
      * @return {@code false} if the date is not valid for this month view, or
-     *         {@code true} if the date received focus
+     * {@code true} if the date received focus
      */
     boolean restoreAccessibilityFocus(Calendar day) {
         if ((day.get(Calendar.YEAR) != mYear) || (day.get(Calendar.MONTH) != mMonth) ||
@@ -661,7 +660,7 @@ class SimpleMonthView extends View {
         /**
          * Calculates the bounding rectangle of a given time object.
          *
-         * @param day The day to calculate bounds for
+         * @param day  The day to calculate bounds for
          * @param rect The rectangle in which to store the bounds
          */
         private void getItemBounds(int day, Rect rect) {
