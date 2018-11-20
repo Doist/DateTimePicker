@@ -20,8 +20,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.accessibility.AccessibilityEvent;
@@ -33,6 +31,8 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.doist.datetimepicker.HapticFeedbackFrameLayout;
 import io.doist.datetimepicker.R;
 import io.doist.datetimepicker.fragment.DatePickerDialogFragment;

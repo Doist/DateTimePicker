@@ -19,14 +19,14 @@ package io.doist.datetimepicker.time;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import io.doist.datetimepicker.HapticFeedbackFrameLayout;
 import io.doist.datetimepicker.R;
 

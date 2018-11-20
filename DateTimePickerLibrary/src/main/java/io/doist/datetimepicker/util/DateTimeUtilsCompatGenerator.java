@@ -1,7 +1,6 @@
 package io.doist.datetimepicker.util;
 
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -12,6 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.annotation.RequiresApi;
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 class DateTimeUtilsCompatGenerator {

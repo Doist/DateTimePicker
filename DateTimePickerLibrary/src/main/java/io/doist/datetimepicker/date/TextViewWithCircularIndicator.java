@@ -22,10 +22,10 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import io.doist.datetimepicker.R;
 
 public class TextViewWithCircularIndicator extends TextView {

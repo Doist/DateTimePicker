@@ -1,8 +1,6 @@
 package io.doist.datetimepicker.sample;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,12 +8,14 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import io.doist.datetimepicker.date.DatePicker;
-import io.doist.datetimepicker.fragment.DatePickerDialogFragmentCompat;
 import io.doist.datetimepicker.date.OnDateSetListener;
+import io.doist.datetimepicker.fragment.DatePickerDialogFragmentCompat;
+import io.doist.datetimepicker.fragment.TimePickerDialogFragmentCompat;
 import io.doist.datetimepicker.time.OnTimeSetListener;
 import io.doist.datetimepicker.time.TimePicker;
-import io.doist.datetimepicker.fragment.TimePickerDialogFragmentCompat;
 
 
 public class MainActivity extends AppCompatActivity implements OnDateSetListener, OnTimeSetListener {

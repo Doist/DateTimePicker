@@ -18,7 +18,6 @@ package io.doist.datetimepicker.date;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ import android.widget.ListView;
 
 import java.util.Calendar;
 
+import androidx.annotation.NonNull;
 import io.doist.datetimepicker.R;
 
 /**

@@ -25,7 +25,6 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
@@ -43,6 +42,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Locale;
 
+import androidx.annotation.NonNull;
 import io.doist.datetimepicker.R;
 import io.doist.datetimepicker.util.DateTimeUtilsCompat;
 import io.doist.datetimepicker.util.ViewStateUtils;
