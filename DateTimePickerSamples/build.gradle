@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "io.doist.datetimepicker.sample"
