@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace "io.doist.datetimepicker"
     compileSdkVersion 31
 
     defaultConfig {
