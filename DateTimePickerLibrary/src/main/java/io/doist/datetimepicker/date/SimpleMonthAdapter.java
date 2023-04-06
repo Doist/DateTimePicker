@@ -97,7 +97,8 @@ class SimpleMonthAdapter extends BaseAdapter {
     void setCalendarTextAppearance(int resId) {
         final TypedArray a = mContext.obtainStyledAttributes(resId, R.styleable.TextAppearance);
 
-        final ColorStateList textColor = a.getColorStateList(R.styleable.TextAppearance_android_textColor);
+        final ColorStateList textColor = a.getColorStateList(
+                androidx.appcompat.R.styleable.TextAppearance_android_textColor);
         if (textColor != null) {
             mCalendarTextColors = textColor;
         }
