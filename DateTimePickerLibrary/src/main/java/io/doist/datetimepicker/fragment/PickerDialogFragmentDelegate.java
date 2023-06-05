@@ -31,7 +31,9 @@ abstract class PickerDialogFragmentDelegate {
             if (outValue.resourceId >= 0x01000000) {
                 return outValue.resourceId;
             } else {
-                context.getTheme().resolveAttribute(R.attr.alertDialogTheme, outValue, true);
+                context.getTheme()
+                       .resolveAttribute(androidx.appcompat.R.attr.alertDialogTheme, outValue,
+                                         true);
                 return outValue.resourceId;
             }
         }
