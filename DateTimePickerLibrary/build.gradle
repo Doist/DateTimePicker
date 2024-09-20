@@ -2,15 +2,14 @@ apply plugin: 'com.android.library'
 
 android {
     namespace "io.doist.datetimepicker"
-    compileSdkVersion 31
+    compileSdk 34
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 31
     }
 }
 
 dependencies {
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
 }
